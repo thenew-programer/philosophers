@@ -31,24 +31,20 @@ void	eat(t_philo *philo)
 
 void	take_forks(t_philo *philo)
 {
-	// if (philo->id % 2 != 0)
-	// {
-	// 	pthread_mutex_lock(&philo->right_fork);
-	// 	print_status(philo, "has taken a fork");
-	// 	pthread_mutex_lock(philo->left_fork);
-	// 	print_status(philo, "has taken a fork");
-	// }
-	// else
-	// {
-	// 	pthread_mutex_lock(philo->left_fork);
-	// 	print_status(philo, "has taken a fork");
-	// 	pthread_mutex_lock(&philo->right_fork);
-	// 	print_status(philo, "has taken a fork");
-	// }
-	pthread_mutex_lock(philo->left_fork);
-	print_status(philo, "has taken a fork");
-	pthread_mutex_lock(&philo->right_fork);
-	print_status(philo, "has taken a fork");
+	if (philo->id % 2 != 0)
+	{
+		pthread_mutex_lock(&philo->right_fork);
+		print_status(philo, "has taken a fork");
+		pthread_mutex_lock(philo->left_fork);
+		print_status(philo, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_status(philo, "has taken a fork");
+		pthread_mutex_lock(&philo->right_fork);
+		print_status(philo, "has taken a fork");
+	}
 }
 
 void	put_forks(t_philo *philo)
