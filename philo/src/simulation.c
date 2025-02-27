@@ -42,7 +42,7 @@ void	start_simulation(t_data *data)
 	int			i;
 	pthread_t	monitor_thread;
 
-	data->start_time = get_time() + (data->num_philos * 2 + 10);
+	data->start_time = get_time();
 	i = -1;
 	while (++i < data->num_philos)
 		pthread_create(&data->philos[i].thread, NULL, philo_routine,

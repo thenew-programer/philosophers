@@ -12,22 +12,19 @@
 
 #include "../inc/philo.h"
 
-static void	sync_threads(long long start);
-
 void	*philo_routine(void *arg)
 {
 	t_philo			*philo;
 	unsigned int	seed;
 
 	philo = (t_philo *)arg;
-	sync_threads(philo->data->start_time);
 	if (philo->data->num_philos == 1)
 	{
 		think(philo);
 		pthread_mutex_lock(&philo->right_fork);
 		print_status(philo, "has taken a fork");
 		while (is_alive(philo->data))
-			;
+			continue ;
 		pthread_mutex_unlock(&philo->right_fork);
 		return (NULL);
 	}
@@ -56,10 +53,4 @@ void	*monitor_routine(void *arg)
 		usleep(500);
 	}
 	return (NULL);
-}
-
-static void	sync_threads(long long start)
-{
-	while (get_time() < start)
-		continue;
 }
