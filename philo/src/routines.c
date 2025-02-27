@@ -12,7 +12,7 @@
 
 #include "../inc/philo.h"
 
-static void	sync_threads(int start);
+static void	sync_threads(long long start);
 
 void	*philo_routine(void *arg)
 {
@@ -58,8 +58,8 @@ void	*monitor_routine(void *arg)
 	return (NULL);
 }
 
-static void	sync_threads(int start)
+static void	sync_threads(long long start)
 {
 	while (get_time() < start)
-		;
+		continue;
 }
