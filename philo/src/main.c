@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 int	main(int ac, char **av)
 {
 	t_data	data;
 
-	if (parse_args(ac, av, &data) == -1)
+	if (!parse_args(ac, av, &data))
 		return (1);
-	if (init_simulation(&data) == -1)
+	if (!init_simulation(&data))
 		return (1);
 	start_simulation(&data);
 	cleanup(&data);

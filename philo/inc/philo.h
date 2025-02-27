@@ -6,7 +6,7 @@
 /*   By: ybouryal <ybouryal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:52:49 by ybouryal          #+#    #+#             */
-/*   Updated: 2025/02/26 11:54:51 by ybouryal         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:40:10 by ybouryal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,21 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define FALSE 0
-# define TRUE 1
-# define ERROR -1
-# define A 1664525
-# define C 1013904223
-# define M 0xFFFFFFFF
+# define RESET		"\033[0m"
+# define RED		"\033[31m"
+# define BOLD_RED	"\033[1;31m"
+# define GREEN		"\033[32m"
+# define CYAN		"\033[36m"
+# define YELLOW 	"\033[33m"
+# define MAGENTA	"\033[35m"
+# define BLUE		"\033[34m"
+# define WHITE		"\033[1;37m"
+# define FALSE		0
+# define TRUE		1
+# define ERROR		-1
+# define A			1664525
+# define C			1013904223
+# define M			0xFFFFFFFF
 
 typedef struct s_data	t_data;
 
@@ -47,6 +56,7 @@ struct s_data
 	int				time_to_die;
 	int				must_eat_count;
 	int				finished_philos;
+	int				eating_philos;
 	int				all_alive;
 	long long		start_time;
 	pthread_mutex_t	alive_mutex;
@@ -62,6 +72,8 @@ long long		get_time(void);
 void			print_status(t_philo *philo, char *status);
 int				is_alive(t_data *data);
 int				kill_philo(t_data *data);
+int				ft_isdigit(char c);
+int				eat_check(t_data *data);
 
 /* actions.c-----------------------------------------------------------------*/
 void			think(t_philo *philo);
@@ -89,5 +101,4 @@ unsigned int	ft_rand(unsigned int *seed);
 unsigned int	ft_srand(void);
 unsigned int	ft_rand_range(unsigned int *seed,
 					unsigned int min, unsigned int max);
-
 #endif /* PHILO_H */

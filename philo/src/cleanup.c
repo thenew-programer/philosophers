@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   random.c                                           :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouryal <ybouryal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 11:46:12 by ybouryal          #+#    #+#             */
-/*   Updated: 2025/02/26 11:50:22 by ybouryal         ###   ########.fr       */
+/*   Created: 2025/02/25 11:53:57 by ybouryal          #+#    #+#             */
+/*   Updated: 2025/02/25 11:57:46 by ybouryal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
-unsigned int ft_rand(unsigned int *seed)
+void	cleanup(t_data *data)
 {
-    *seed = (*seed * A + C) % M;
-    return *seed;
-}
+	int	i;
 
-unsigned int ft_srand(void)
-{
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (unsigned int)(tv.tv_sec ^ tv.tv_usec);
-}
-
-unsigned int ft_rand_range(unsigned int *seed, unsigned int min, unsigned int max)
-{
-    return min + (ft_rand(seed) % (max - min + 1));
+	i = -1;
+	while (++i < data->num_philos)
+		pthread_mutex_destroy(&data->philos[i].right_fork);
+	pthread_mutex_destroy(&data->alive_mutex);
+	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_destroy(&data->meal_check);
+	free(data->philos);
 }

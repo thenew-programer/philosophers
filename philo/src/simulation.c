@@ -18,7 +18,7 @@ int	init_simulation(t_data *data)
 
 	data->philos = (t_philo *)malloc(sizeof (t_philo) * data->num_philos);
 	if (!data->philos)
-		return (ft_putendl_fd("Memory allocation Failed", 2), -1);
+		return (ft_putendl_fd("Memory allocation Failed", 2), FALSE);
 	pthread_mutex_init(&data->alive_mutex, NULL);
 	pthread_mutex_init(&data->print_mutex, NULL);
 	pthread_mutex_init(&data->meal_check, NULL);
@@ -42,7 +42,7 @@ void	start_simulation(t_data *data)
 	int			i;
 	pthread_t	monitor_thread;
 
-	data->start_time = get_time();
+	data->start_time = get_time() + (data->num_philos * 2 + 10);
 	i = -1;
 	while (++i < data->num_philos)
 		pthread_create(&data->philos[i].thread, NULL, philo_routine,
@@ -51,5 +51,5 @@ void	start_simulation(t_data *data)
 	i = -1;
 	while (++i < data->num_philos)
 		pthread_join(data->philos[i].thread, NULL);
-	pthread_join(monitor_thread, NULL);
+	pthread_detach(monitor_thread);
 }
