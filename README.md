@@ -117,23 +117,23 @@ The test suite checks various scenarios including:
 ## Project Structure
 
 ```
-.
-├── inc/
-│ └── philo.h # Header file with structures and function declarations
-├── src/
-│ ├── actions.c # Philosopher actions (eat, sleep, think)
-│ ├── cleanup.c # Resource cleanup functions
-│ ├── main.c # Program entry point
-│ ├── parser.c # Command-line argument parsing
-│ ├── routines.c # Thread routines for philosophers and monitor
-│ ├── simulation.c # Simulation initialization and execution
-│ ├── utils_1.c # Utility functions
-│ └── utils_2.c # Additional utility functions
-├── Makefile # Build configuration
-└── README.md # This file
+./philo
+       ├── inc/
+       │ └── philo.h # Header file with structures and function declarations
+       ├── src/
+       │ ├── actions.c # Philosopher actions (eat, sleep, think)
+       │ ├── cleanup.c # Resource cleanup functions
+       │ ├── main.c # Program entry point
+       │ ├── parser.c # Command-line argument parsing
+       │ ├── routines.c # Thread routines for philosophers and monitor
+       │ ├── simulation.c # Simulation initialization and execution
+       │ ├── utils_1.c # Utility functions
+       │ └── utils_2.c # Additional utility functions
+       ├── Makefile # Build configuration and test
+       └── README.md # This file
 
 ```
 
 ## Author
 
-Created by ybouryal.
+Created by `ybouryal` aka ![thenew-programer](https://github.com/thenew-programer).
