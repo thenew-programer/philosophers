@@ -4,7 +4,7 @@
 
 A solution for the classic dining philosophers problem, implemented using POSIX threads and mutexes in C.
 
-### Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [The Problem](#the-problem)
