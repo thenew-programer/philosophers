@@ -25,7 +25,7 @@ OBJS_DIR	= obj
 HEAD		= inc
 
 FILES		= actions.c cleanup.c main.c parser.c routines.c \
-			  simulation.c utils_1.c utils_2.c random.c
+			  simulation.c utils_1.c utils_2.c
 SRCS		= $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS		= $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))
 
@@ -56,5 +56,8 @@ re:
 			@$(MAKE) fclean
 			@$(MAKE) all
 
-.PHONY: all clean fclean re
+test: $(NAME)
+	@cd ./test && bash ./test.sh
+
+.PHONY: all clean fclean re test
 .SECONDARY:	$(OBJS)

@@ -18,9 +18,19 @@ void	cleanup(t_data *data)
 
 	i = -1;
 	while (++i < data->num_philos)
+	{
+		pthread_mutex_lock(&data->philos[i].right_fork);
+		pthread_mutex_unlock(&data->philos[i].right_fork);
 		pthread_mutex_destroy(&data->philos[i].right_fork);
+	}
+	pthread_mutex_lock(&data->alive_mutex);
+	pthread_mutex_unlock(&data->alive_mutex);
 	pthread_mutex_destroy(&data->alive_mutex);
+	pthread_mutex_lock(&data->print_mutex);
+	pthread_mutex_unlock(&data->print_mutex);
 	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_lock(&data->meal_check);
+	pthread_mutex_unlock(&data->meal_check);
 	pthread_mutex_destroy(&data->meal_check);
 	free(data->philos);
 }

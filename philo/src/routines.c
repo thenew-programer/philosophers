@@ -15,7 +15,6 @@
 void	*philo_routine(void *arg)
 {
 	t_philo			*philo;
-	unsigned int	seed;
 
 	philo = (t_philo *)arg;
 	if (philo->data->num_philos == 1)
@@ -28,15 +27,14 @@ void	*philo_routine(void *arg)
 		pthread_mutex_unlock(&philo->right_fork);
 		return (NULL);
 	}
-	seed = ft_srand();
 	if (philo->id % 2)
-		usleep(ft_rand_range(&seed, 1000, 3000));
+		usleep(3000);
 	while (is_alive(philo->data))
 	{
+		think(philo);
 		take_forks(philo);
 		eat(philo);
 		sleep_philo(philo);
-		think(philo);
 	}
 	return (NULL);
 }

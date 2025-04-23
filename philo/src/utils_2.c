@@ -18,7 +18,7 @@ void	print_status(t_philo *philo, char *status)
 
 	pthread_mutex_lock(&philo->data->print_mutex);
 	timestamp = get_time() - philo->data->start_time;
-	if (philo->data->all_alive)
+	if (is_alive(philo->data))
 	{
 		printf(BLUE"%lld "RESET, timestamp);
 		printf(WHITE"%d "RESET, philo->id);
@@ -56,15 +56,15 @@ int	eat_check(t_data *data)
 		if (data->must_eat_count > 0
 			&& data->finished_philos == data->num_philos)
 		{
-			kill_philo(data);
 			pthread_mutex_unlock(&data->meal_check);
+			kill_philo(data);
 			return (FALSE);
 		}
 		if (get_time() - data->philos[i].last_meal_time > data->time_to_die)
 		{
+			pthread_mutex_unlock(&data->meal_check);
 			print_status(&data->philos[i], BOLD_RED"died"RESET);
 			kill_philo(data);
-			pthread_mutex_unlock(&data->meal_check);
 			return (FALSE);
 		}
 		pthread_mutex_unlock(&data->meal_check);

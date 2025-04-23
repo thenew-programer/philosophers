@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 void	think(t_philo *philo)
 {
@@ -24,6 +24,7 @@ void	eat(t_philo *philo)
 	if (philo->meals_eaten == philo->data->must_eat_count)
 	{
 		pthread_mutex_unlock(&philo->data->meal_check);
+		put_forks(philo);
 		return ;
 	}
 	philo->last_meal_time = get_time();
@@ -32,21 +33,42 @@ void	eat(t_philo *philo)
 		philo->data->finished_philos++;
 	pthread_mutex_unlock(&philo->data->meal_check);
 	usleep(philo->data->time_to_eat * 1000);
+	pthread_mutex_lock(&philo->data->meal_check);
+	philo->last_meal_time = get_time();
+	pthread_mutex_unlock(&philo->data->meal_check);
 	put_forks(philo);
 }
 
 void	take_forks(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->right_fork);
-	print_status(philo, MAGENTA"has taken a fork"RESET);
-	pthread_mutex_lock(philo->left_fork);
-	print_status(philo, MAGENTA"has taken a fork"RESET);
+	if (philo->id % 2)
+	{
+		pthread_mutex_lock(&philo->right_fork);
+		print_status(philo, MAGENTA"has taken a fork"RESET);
+		pthread_mutex_lock(philo->left_fork);
+		print_status(philo, MAGENTA"has taken a fork"RESET);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_status(philo, MAGENTA"has taken a fork"RESET);
+		pthread_mutex_lock(&philo->right_fork);
+		print_status(philo, MAGENTA"has taken a fork"RESET);
+	}
 }
 
 void	put_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(&philo->right_fork);
-	pthread_mutex_unlock(philo->left_fork);
+	if (philo->id % 2)
+	{
+		pthread_mutex_unlock(&philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(&philo->right_fork);
+	}
 }
 
 void	sleep_philo(t_philo *philo)
